@@ -419,6 +419,9 @@
                             document.querySelector(".jumbotron.jumbotron-fluid").style.height = "30%";
                 
                         }
+                    
+                    const urlParams = new URLSearchParams(window.location.search)
+                    console.log(urlParams.get("myId"))
                     }
 
                     //Script
@@ -507,7 +510,7 @@
                   music.stop()
               }
 
-            fetch("https://deezerdevs-deezer.p.rapidapi.com/album/915782", {
+            fetch("https://deezerdevs-deezer.p.rapidapi.com/album/75621062", {
 	            "method": "GET",
 	            "headers": {
 		        "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
