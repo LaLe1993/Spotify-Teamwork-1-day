@@ -420,16 +420,14 @@
                 
                         }
                     
-                    const urlParams = new URLSearchParams(window.location.search)
-                    console.log(urlParams.get("id"))
                     }
-
+                    
                     //Script
                     let navbarNow = document.querySelector(".navbar-menu");
                     window.addEventListener("resize",function(){
-                    let windowSize = window.innerWidth;
-                    let windowHeight = window.innerHeight;
-                    let numberOfChildren = document.querySelectorAll(".first-div-in-player > div");
+                        let windowSize = window.innerWidth;
+                        let windowHeight = window.innerHeight;
+                        let numberOfChildren = document.querySelectorAll(".first-div-in-player > div");
                         if(windowSize < 1074){
                             numberOfChildren[0].setAttribute("style","display:none;")
                             numberOfChildren[1].setAttribute("style","margin-left:12px;")
@@ -449,10 +447,10 @@
                         }
                         if(windowHeight < 768){
                             document.querySelector(".jumbotron.jumbotron-fluid").style.height = "30%";
-                
+                            
                         }
                     })
-
+                    
                     let songDetails = document.querySelector('#current-song-name');
                     let songList = document.querySelectorAll('table tr');
                     for (let i = 0; i<songList.length; i++){
@@ -461,59 +459,61 @@
                             if(currentSong.tagName === 'td p'){   
                                 songDetails.innerText = currentSong;      
                             }else{      
-                             songDetails.classList.toggle('current-Song-name') 
+                                songDetails.classList.toggle('current-Song-name') 
                             }   
                         })
                     }
-
+                    
                     
                     
 
                     let heartIcons = document.querySelectorAll('.fa-heart')
                     for(let i=0;i<heartIcons.length;i++){
                         let heartIcon = heartIcons[i]
-                    heartIcon.addEventListener('click',function(){
-                        if(heartIcon.classList.contains("fa")){
-                            heartIcon.classList.remove("fa");
-                            heartIcon.classList.add("far");
-                        }else{    
-                            heartIcon.classList.remove("far");
-                            heartIcon.classList.add("fa");
+                        heartIcon.addEventListener('click',function(){
+                            if(heartIcon.classList.contains("fa")){
+                                heartIcon.classList.remove("fa");
+                                heartIcon.classList.add("far");
+                            }else{    
+                                heartIcon.classList.remove("far");
+                                heartIcon.classList.add("fa");
+                            }
+                        })
+                    }
+                    
+                    let playButton = document.querySelector('.playStop');
+                    playButton.addEventListener('click', function(){
+                        if(playButton.classList.contains("fa-play-circle")){
+                            let music = new Audio('songs/frank.mp3')
+                            music.play()
+                            music.classList.add('current-song-name')
+                            playButton.classList.remove("fa-play-circle")
+                            playButton.classList.add("fa-pause-circle")
+                        }else{
+                            let music = new Audio('songs/frank.mp3')
+                            music.pause();
+                            music.currentTime = 0;
+                            music.classList.add('current-song-name')
+                            playButton.classList.remove("fa-pause-circle")
+                            playButton.classList.add("fa-play-circle")
                         }
                     })
+                    function pause(){
+                        let music = new Audio('songs/frank.mp3')
+                        music.stop()
                     }
-
-              let playButton = document.querySelector('.playStop');
-              playButton.addEventListener('click', function(){
-                  if(playButton.classList.contains("fa-play-circle")){
-                  let music = new Audio('songs/frank.mp3')
-                  music.play()
-                  music.classList.add('current-song-name')
-                  playButton.classList.remove("fa-play-circle")
-                  playButton.classList.add("fa-pause-circle")
-                  }else{
-                    let music = new Audio('songs/frank.mp3')
-                    music.pause();
-                    music.currentTime = 0;
-                  music.classList.add('current-song-name')
-                  playButton.classList.remove("fa-pause-circle")
-                  playButton.classList.add("fa-play-circle")
-                  }
-              })
-              function pause(){
-                let music = new Audio('songs/frank.mp3')
-                  music.stop()
-              }
-
-            fetch("https://deezerdevs-deezer.p.rapidapi.com/album/75621062", {
-	            "method": "GET",
-	            "headers": {
-		        "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
-		        "x-rapidapi-key": "04e50f3110msh4e10cca9d80a2ddp1577e8jsn91734efbae08"
-	            }
-            })
-            .then(response => response.json())
-            .then(json => {
+                    
+                    const urlParams = new URLSearchParams(window.location.search)
+                    const albumId = urlParams.get("id");
+                    fetch("https://deezerdevs-deezer.p.rapidapi.com/album/" + albumId , {
+                        "method": "GET",
+                        "headers": {
+                            "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
+                            "x-rapidapi-key": "04e50f3110msh4e10cca9d80a2ddp1577e8jsn91734efbae08"
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(json => {
                 console.log(json)
                 let albumImg = document.querySelector(".card > img")
                 let albumName = document.querySelector(".card-title")
