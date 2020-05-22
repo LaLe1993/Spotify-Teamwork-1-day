@@ -421,7 +421,7 @@
                         }
                     
                     const urlParams = new URLSearchParams(window.location.search)
-                    console.log(urlParams.get("myId"))
+                    console.log(urlParams.get("id"))
                     }
 
                     //Script
@@ -454,22 +454,17 @@
                     })
 
                     let songDetails = document.querySelector('#current-song-name');
-                    console.log(songDetails)
                     let songList = document.querySelectorAll('table tr');
                     for (let i = 0; i<songList.length; i++){
-                    songList[i].addEventListener("click", function(e){
-
-                        let currentSong = e.currentTarget;
-                        
-                        if(currentSong.tagName === 'td p'){
-                        
-                        songDetails.innerText = currentSong;
-                            
-                        }else{
-                            
-                        } songDetails.classList.toggle('current-Song-name')    
-                    })
-                     }
+                        songList[i].addEventListener("click", function(e){
+                            let currentSong = e.currentTarget;   
+                            if(currentSong.tagName === 'td p'){   
+                                songDetails.innerText = currentSong;      
+                            }else{      
+                             songDetails.classList.toggle('current-Song-name') 
+                            }   
+                        })
+                    }
 
                     
                     
@@ -538,7 +533,6 @@
                     let songDurationMinutes = Math.floor(json.tracks.data[i].duration / 60)
                     let songRemainingSeconds = json.tracks.data[i].duration - songDurationMinutes*60;
                     let songDurationTotal = songDurationMinutes + ":" + songRemainingSeconds;
-                    console.log(songRemainingSeconds)
                     newListRow.innerHTML = `<td class="table-first-col">
                                                 <i class="fa fa-music mr-2 text-white"></i>
                                             </td>
