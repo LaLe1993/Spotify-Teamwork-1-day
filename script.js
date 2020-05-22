@@ -64,6 +64,5 @@ async function displayArtists (){
 
 getArtistName().then(jsonResponse=>{
     let artistName = document.querySelector('.artistName')
-    artistName.innerHTML +=
-    `<h1>${jsonResponse.name}</h1>`
+    artistName.innerText =jsonResponse.name
 })
