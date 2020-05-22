@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
+    
+    <link rel="manifest" href="./favicon/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="homepage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <title>Home</title>
+  </head>
+  <body>
+    <!-- Side bar -->
+    <div class="container-fluid" id="mainContainer">
+        <nav id="sidebar">
+          <div class="sidebar-header">
+            <i class="fab fa-spotify"></i>
+            <p>Spotify</p>
+          </div>
+          <ul class="list-unstyled" >
+            <div id="sidebar-content">
+              <div class="d-flex active">
+                <div style="width: 22px;">
+                  <i class="fas fa-home"></i>
+                </div>
+                <a href="#">Home</a>
+              </div>
+              <div class="d-flex">
+                <div style="width: 22px;">
+                  <i class="fas fa-search"></i>
+                </div>
+                <a href="">Search</a>
+              </div>
+              <div class="d-flex">
+                <div style="width: 22px;">
+                  <i class="fas fa-book-open"></i>
+                </div>
+                <a href="album.html">Your Library</a>
+              </div>
+            </div>
+          </ul>
+          <div id="buttons">
+            <div id="signUp">
+              <button type="button" class="btn btn-block"><p>SIGN UP</p></button>
+            </div>
+            <div id="login">
+              <button type="button" onclick="window.location.href = 'login.html'" class="btn btn-block"><p>LOGIN</p></button>
+            </div>
+            <div id="sidebar-footer">
+              <div class="footer">
+                <p>Cookie</p>
+                <p>|</p>
+                <p>Privacy</p>
+              </div>
+              <div style="margin-top: -15px; margin-left: 5px;">
+                <p style="font-size: 12px;">Policy</p>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div class="container-fluid" id="content">
+          <nav >
+            <nav class="navbar navbar-expand-md navbar-light" >
+              <a class="navbar-brand" href="#"><i class="fab fa-spotify"></i><button type="button" class="btn btn-outline-success btnMobile">SIGN UP</button><button type="button" class="btn btn-outline-success btnMobile">LOGIN</button></a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="#">TRENDING </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">PODCAST</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">MOODS AND GENRES</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">NEW RELEASES</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">DISCOVER</a>
+                  </li>
+                  <li class="nav-item">
+                    <input type="text" id="search" placeholder="search" autocomplete="off" onkeyup="filterSearch()">
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </nav>
+          <div class="container cardRow">
+            <p>#THROWBACKTHURSDAY</p>
+  
+    <!-- Optional JavaScript -->
+    <script>
+    var contentNavLinks = document.querySelectorAll('#contentNav a')
+    for(let i=0;i<contentNavLinks.length;i++){
+      contentNavLinks[i].addEventListener('click',function(){
+        let presentLink = document.querySelector('#contentNav .active')
+        presentLink.classList.remove('active')
+        contentNavLinks[i].classList.add('active')
+      })
+    }
+    window.onload = () =>{
+         loadAlbums('Queen')
+       loadAlbums('Eminem')
+       loadAlbums('Miley Cyrus')
+        } 
+    const loadAlbums = (artistName) =>{
+      fetch(`https://deezerdevs-deezer.p.rapidapi.com/search?q=${artistName}`, {
+	    "method": "GET",
+	    "headers": {
+		    "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
+		    "x-rapidapi-key": "49a206362dmshb20519b822912b7p1dc792jsn37f9d0304fcc"
+	}
+})
+        .then(response => response.json())
+        .then(parsedJson => {
+          let albumArray = parsedJson.data
+          let firstSet = albumArray.slice(0,6)
+          let secondSet = albumArray.slice(6,12)
+          let displaySet = firstSet
+     
+          let container = document.querySelector('.cardRow')
+          container.innerHTML += `
+          <div style="position:relative;">
+            <p class="mt-4"><a href = 'artists.html?artist=${artistName}'>${artistName.toUpperCase()}</a></p>
+            <p style="position: absolute; right: 20px; top: 0;" class="next" ><i class="fas fa-arrow-right"  style="color: white;"></i></p>
+            <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6">
+              <div class="col">
+                <div class="card my-2" >
+                  <img src="${displaySet[0].album.cover_big}" alt="...">
+                  <p class="cardBody"><a href=''>${displaySet[0].title}</a><br><a href='album.html?artist=${displaySet[0].album.title}'>${displaySet[0].album.title}</a></p>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card my-2" >
+                  <img src="${displaySet[1].album.cover_big}" alt="...">
+                  <p class="cardBody"><a href=''>${displaySet[1].title}</a><br><a href='album.html?album=${displaySet[1].album.title}'>${displaySet[1].album.title}</a></p>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card my-2" >
+                  <img src="${displaySet[2].album.cover_big}" alt="...">
+                  <p class="cardBody"><a href=''>${displaySet[2].title}</a><br><a href='album.html?album=${displaySet[2].album.title}'>${displaySet[2].album.title}</a></p>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card my-2" >
+                  <img src="${displaySet[3].album.cover_big}" alt="...">
+                  <p class="cardBody"><a href=''>${displaySet[3].title}</a><br><a href='album.html?album=${displaySet[3].album.title}'>${displaySet[3].album.title}</a></p>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card my-2" >
+                  <img src="${displaySet[4].album.cover_big}" alt="...">
+                  <p class="cardBody"><a href=''>${displaySet[4].title}</a><br><a href='album.html?album=${displaySet[4].album.title}'>${displaySet[4].album.title}</a></p>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card my-2" >
+                  <img src="${displaySet[5].album.cover_big}" alt="...">
+                  <p class="cardBody"><a href=''>${displaySet[5].title}</a><br><a href='artists.html?album=${displaySet[5].album.title}'>${displaySet[5].album.title}</p>
+                </div>
+              </div>
+            </div>
+          <div>
+          `
+        })
+       
+        .catch(err => {
+          console.log(err);
+        });
+    }  
+    const filterSearch = () =>{
+      let val = document.querySelector('#search').value.toLowerCase()
+      let container = document.querySelector('.cardRow')
+      if(val.length>0){
+        
+        fetch(`https://deezerdevs-deezer.p.rapidapi.com/search?q=${val}`, {
+          "method": "GET",
+          "headers": {
+		    "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
+		    "x-rapidapi-key": "49a206362dmshb20519b822912b7p1dc792jsn37f9d0304fcc"
+	}
+}).then(response => response.json())
+  .then(parsedJson => {
+    let arr = parsedJson.data
+    container.innerHTML = ''
+    let resultText = document.createElement('p')
+    resultText.classList.add('mt-4')
+    resultText.innerText = `Search results for  "${val}"`
+    let newRow = document.createElement('div')
+    newRow.setAttribute('class','row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6')
+    container.appendChild(resultText)
+    container.appendChild(newRow)
+    let filteredSongs = arr.filter(element => element.title.includes(val))
+    console.log(filteredSongs)
+    for(let i=0;i<filteredSongs.length;i++){
+      newRow.innerHTML += `
+      <div class="col">
+          <div class="card my-2" >
+            <img src="${filteredSongs[i].album.cover_big}" alt="...">
+            <p class="cardBody"><a href=''>${filteredSongs[i].title}</a><br><a href=''>${filteredSongs[i].album.title}</a></p>
+          </div>
+      </div>
+      `
+    }
+  })
+
+      }else{
+        container.style.display = 'block'
+      }
+      
+    } 
+ </script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://kit.fontawesome.com/ddd26a46d6.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
