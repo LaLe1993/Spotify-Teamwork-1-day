@@ -386,7 +386,7 @@
 
                     function windowSize() {
                         let windowSize = window.innerWidth;
-                    let windowHeight = window.innerHeight;
+                        let windowHeight = window.innerHeight;
                     let numberOfChildren = document.querySelectorAll(".first-div-in-player > div");
                         if(windowSize < 1074){
                             numberOfChildren[0].setAttribute("style","display:none;")
@@ -395,7 +395,6 @@
                             numberOfChildren[0].setAttribute("style","display:block;")
                             numberOfChildren[1].setAttribute("style","margin-left:0px;")
                         }
-                        let navbarRegular = document.querySelector(".navbar-menu");
                         if(windowSize < 768){
                             document.querySelector(".navbar").classList.remove("vertical-navbar")
                             document.querySelector(".navbar").classList.remove("flex-column")
@@ -417,7 +416,6 @@
                     window.onload = windowSize
 
                     //Script
-                    let navbarNow = document.querySelector(".navbar-menu");
                     window.addEventListener("resize",windowSize)
                 </script>
 </html>
